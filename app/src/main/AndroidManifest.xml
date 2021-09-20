@@ -22,13 +22,15 @@
         <activity android:name=".Account.ActivityRegistion" />
         <activity android:name=".Account.ActivityFogotV2" />
         <activity android:name=".Account.ActivityFogotPass" />
-        <activity android:name=".Account.Login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Account.Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+
         </activity>
 
         <meta-data

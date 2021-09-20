@@ -1,15 +1,21 @@
 package com.example.bookacar.person;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.example.bookacar.Account.Login;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.FragmentPersonBinding;
+import com.example.bookacar.util.PreferenceManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,15 +37,6 @@ public class PersonFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PersonFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static PersonFragment newInstance(String param1, String param2) {
         PersonFragment fragment = new PersonFragment();
         Bundle args = new Bundle();
@@ -59,11 +56,26 @@ public class PersonFragment extends Fragment {
     }
 
     FragmentPersonBinding binding;
+    private FirebaseAuth firebaseAuth;
+    private PreferenceManager preferenceManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_person, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+        preferenceManager = new PreferenceManager(getContext());
+        binding.txtLogout.setOnClickListener(view1 -> {
+            firebaseAuth.signOut();
+            preferenceManager.clear();
+            getActivity().finish();
+            getActivity().startActivity(new Intent(getContext(), Login.class));
+        });
     }
 }

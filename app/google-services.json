@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "490900956771",
+    "project_id": "bookcarapp-4fa13",
+    "storage_bucket": "bookcarapp-4fa13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490900956771:android:62c4c61114b7fd6523fa56",
+        "android_client_info": {
+          "package_name": "com.example.bookacar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490900956771-qukhu8q9o1s2v5ual9pd0m46ve2e8fcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2QEOttawWpTLHD5o_nfBDeEDs5Mndkos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490900956771-qukhu8q9o1s2v5ual9pd0m46ve2e8fcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
