@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.bookacar.MainActivity;
 import com.example.bookacar.R;
+import com.example.bookacar.admin.AdminActivity;
 import com.example.bookacar.databinding.ActivityLoginBinding;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
@@ -27,9 +28,15 @@ public class Login extends AppCompatActivity {
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(intent);
-            finish();
+            if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         binding.forgotBtn.setOnClickListener(v -> {
@@ -63,10 +70,17 @@ public class Login extends AppCompatActivity {
                         DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                         preferenceManager.putString(Constants.KEY_PHONE_NUMBER, documentSnapshot.getString(Constants.KEY_PHONE_NUMBER));
                         preferenceManager.putString(Constants.KEY_PASSWORD, documentSnapshot.getString(Constants.KEY_PASSWORD));
+                        preferenceManager.putString(Constants.KEY_TYPE_USER, documentSnapshot.getString(Constants.KEY_TYPE_USER));
 
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+                            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 });
     }

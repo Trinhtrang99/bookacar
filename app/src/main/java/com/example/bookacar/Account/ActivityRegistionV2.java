@@ -34,6 +34,7 @@ public class ActivityRegistionV2 extends AppCompatActivity {
             HashMap<String, Object> user = new HashMap<>();
             user.put(Constants.KEY_PHONE_NUMBER, getIntent().getStringExtra("Phone"));
             user.put(Constants.KEY_PASSWORD, binding.edtPassword.getText().toString());
+            user.put(Constants.KEY_TYPE_USER, "user");
             database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                     .add(user)
                     .addOnSuccessListener(documentReference -> {

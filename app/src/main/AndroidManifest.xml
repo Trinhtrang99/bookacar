@@ -16,22 +16,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookACar">
-        <activity android:name=".map.GGActivity"></activity>
+        <activity
+            android:name=".admin.EditActivity"
+            android:exported="true" />
+        <activity
+            android:name=".admin.AdminActivity"
+            android:exported="true" />
+        <activity android:name=".map.GGActivity" />
         <activity android:name=".splash.ActivitySplash" />
         <activity android:name=".Account.ActivityRegistionV2" />
         <activity android:name=".Account.ActivityRegistion" />
         <activity android:name=".Account.ActivityFogotV2" />
         <activity android:name=".Account.ActivityFogotPass" />
-        <activity android:name=".Account.Login" >
+        <activity android:name=".Account.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
