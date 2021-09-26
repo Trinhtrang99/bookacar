@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.bookacar.Account.Login;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.FragmentPersonBinding;
+import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -69,8 +70,11 @@ public class PersonFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        firebaseAuth = FirebaseAuth.getInstance();
         preferenceManager = new PreferenceManager(getContext());
+
+        binding.txtPhone.setText(preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
+
+        firebaseAuth = FirebaseAuth.getInstance();
         binding.txtLogout.setOnClickListener(view1 -> {
             firebaseAuth.signOut();
             preferenceManager.clear();

@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements Onclick {
 
         onclick = this::OnClick;
 
-        binding.btnbook.setOnClickListener(v -> {
+        /*binding.btnbook.setOnClickListener(v -> {
 
             displayAlertDialog();
-        });
+        });*/
         loadFragment(new HomeFragment());
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -208,5 +208,11 @@ public class MainActivity extends AppCompatActivity implements Onclick {
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.bottomNavigationView.setSelectedItemId(R.id.navigation_home);
     }
 }

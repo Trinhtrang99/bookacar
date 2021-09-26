@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".BookActivity"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="20dp">
+
+        <EditText
+            android:id="@+id/edt_location_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Điểm bắt đầu"/>
+
+        <EditText
+            android:id="@+id/edt_location_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Điểm kết thúc"/>
+
+        <Button
+            android:id="@+id/btn_book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đặt xe"/>
+    </LinearLayout>
+
+</layout>
