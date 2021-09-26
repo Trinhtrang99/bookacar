@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.bookacar.Account.Login;
 import com.example.bookacar.BaseActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.admin.model.Driver;
 import com.example.bookacar.databinding.ActivityAdminBinding;
 import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -24,6 +26,7 @@ public class AdminActivity extends BaseActivity {
     private ActivityAdminBinding binding;
     private DriverAdapter adapter;
     private List<Driver> drivers;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +34,15 @@ public class AdminActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_admin);
 
         drivers = new ArrayList<>();
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         binding.btnAddDriver.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), EditActivity.class));
+        });
+
+        binding.btnLogout.setOnClickListener(view -> {
+            preferenceManager.clear();
+            startActivity(new Intent(AdminActivity.this, Login.class));
         });
     }
 

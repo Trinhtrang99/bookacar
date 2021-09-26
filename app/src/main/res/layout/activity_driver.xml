@@ -7,10 +7,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".admin.AdminActivity">
+        tools:context=".driver.DriverActivity">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_driver"
+            android:id="@+id/rv_user_book"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
@@ -19,18 +19,8 @@
             android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_above="@+id/btn_add_driver"
-            android:text="Đăng xuất"/>
-
-        <Button
-            android:id="@+id/btn_add_driver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thêm tài xế"
-            android:layout_marginHorizontal="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"/>
+            android:text="Đăng xuất"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 

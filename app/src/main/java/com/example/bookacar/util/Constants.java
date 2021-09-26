@@ -10,6 +10,9 @@ public class Constants {
     public final static String TYPE_ADMIN = "admin";
     public final static String KEY_NAME = "name";
     public final static String KEY_IMAGE = "image";
+    public final static String KEY_COLLECTION_BOOK = "books";
+    public final static String KEY_LOCATION_START = "locationStart";
+    public final static String KEY_LOCATION_END = "locationEnd";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";

@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookACar">
         <activity
+            android:name=".driver.DriverActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BookActivity"
+            android:exported="true" />
+        <activity
             android:name=".admin.EditActivity"
             android:exported="true" />
         <activity
