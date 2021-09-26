@@ -7,6 +7,14 @@ public class Driver {
     private String password;
     private String phoneNumber;
 
+    public Driver(String id, String image, String name, String password, String phoneNumber) {
+        this.id = id;
+        this.image = image;
+        this.name = name;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getId() {
         return id;
     }
