@@ -3,4 +3,5 @@
     <string name="forgotpass"><u>Quên mật khẩu</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="engine_init_error">erroe</string>
 </resources>

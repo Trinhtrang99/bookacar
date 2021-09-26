@@ -2,11 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bookacar">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION " />
 
     <application
         android:allowBackup="true"
@@ -16,23 +18,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookACar">
-        <activity android:name=".map.GGActivity"></activity>
+        <activity android:name=".bookcar.ActivityBookCar"></activity>
+         <activity android:name=".test.ChangePositionMap"></activity>
+        <!-- <activity android:name=".MainActivity2"></activity> -->
         <activity android:name=".splash.ActivitySplash" />
         <activity android:name=".Account.ActivityRegistionV2" />
         <activity android:name=".Account.ActivityRegistion" />
         <activity android:name=".Account.ActivityFogotV2" />
         <activity android:name=".Account.ActivityFogotPass" />
-        <activity android:name=".Account.Login" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-
+        </activity> <!-- <activity android:name=".MainActivity"> -->
+        <!-- </activity> -->
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -45,6 +46,12 @@
         <meta-data
             android:name="com.here.android.maps.license.key"
             android:value="UE/iglKGUWFAP3MJMKzDKfmy2xs21JwODC2lx9woC7PS1dBvyOAXq2b7+xb7FM2fY27mNdaOFJF5DmJ2kXrqsdQNabhEsuUV92zOZcSbgiyTYGnTU6ovp2BWm+VKc7+A/heMPXvnS1jNrrGZZAXydG2g6UP6w623RYlkfNexGlWNr6p+OXkhiZr1cEcsl9YH64oo+ApsF3bKyLXgtcuZKAGM4P5j5I/2OvEpdUPQ0/k+iIaIsdqKz5WjXAUzQpzp1PYfwC0vWVM8aPRxOYM01azehW+oSQ+ZYhEFd/g2AKkCq0ZokIKRgTwB0EGykcNCOyWUc26H3qby843cfDyl/WJH2fJse3ljBL7wZU06cosa8Ly1MGKSmMkNDM+wgBGa/Awm7aiBCX/9+GII/KgwIo3cFMmzUK5LA8O4wTiw3meGux+EiRPAnKflgde1XFUPhpp33LmgpnQ5IOuLhloQcnC7yF0jV3hfXKp4x/mXAI8g541jdTIiGV0HBadErVrl2AIVD0AnDsEYOg9LVpBLA+d88eoeCwUYXjrcbSRALgC9FZn0INL5VYaBIw8PYuktQPzxucsTDIsHz6mA/+yPlGO11hJZMkNLjwUsNS5cruXBezvf3+l8tO5wK+IL88LoI9ZP5Y1c9d/1hQGND/oS1kKmxOXH3A9U9Jg4caWkChc=" />
+
+        <service
+            android:name="com.here.services.internal.LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":remote" />
     </application>
 
 </manifest>
