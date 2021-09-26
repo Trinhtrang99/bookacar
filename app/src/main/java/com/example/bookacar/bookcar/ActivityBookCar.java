@@ -218,21 +218,30 @@ public class ActivityBookCar extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 99) {
-            data.getStringExtra("location");
-            lat = data.getDoubleExtra("lat", -1.0);
-            log = data.getDoubleExtra("long", -1.0);
-            edtDen.setText(data.getStringExtra("title"));
-            if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
-                m_calculateRouteButton.setEnabled(true);
-            }
-        } else if (requestCode == 100) {
-            txt_DiemDon.setText(data.getStringExtra("title"));
-            txtDonlat = data.getDoubleExtra("lat", -1.0);
-            txtDonLong = data.getDoubleExtra("long", -1.0);
-            if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
-                m_calculateRouteButton.setEnabled(true);
+        if (data != null) {
+            if (requestCode == 99) {
+                data.getStringExtra("location");
+                lat = data.getDoubleExtra("lat", -1.0);
+                log = data.getDoubleExtra("long", -1.0);
+                edtDen.setText(data.getStringExtra("title"));
+                if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
+                    m_calculateRouteButton.setEnabled(true);
+                }
+            } else if (requestCode == 100) {
+                txt_DiemDon.setText(data.getStringExtra("title"));
+                txtDonlat = data.getDoubleExtra("lat", -1.0);
+                txtDonLong = data.getDoubleExtra("long", -1.0);
+                if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
+                    m_calculateRouteButton.setEnabled(true);
+                }
             }
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

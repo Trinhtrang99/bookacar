@@ -27,6 +27,7 @@ import com.example.bookacar.databinding.ActivityMainBinding;
 import com.example.bookacar.home.HomeFragment;
 import com.example.bookacar.map.MapFragmentView;
 import com.example.bookacar.map.Onclick;
+import com.example.bookacar.notication.NoticationFragment;
 import com.example.bookacar.person.PersonFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -67,13 +68,17 @@ public class MainActivity extends AppCompatActivity implements Onclick {
                         binding.map.setVisibility(View.GONE);
                         return true;
                     case R.id.Map:
-                        binding.map.setVisibility(View.VISIBLE);
-                        if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
-                            setupMapFragmentView();
-                        } else {
-                            ActivityCompat
-                                    .requestPermissions(MainActivity.this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
-                        }
+                        binding.map.setVisibility(View.GONE);
+                        loadFragment(new NoticationFragment());
+                        backStackFragment(new NoticationFragment());
+
+//                        binding.map.setVisibility(View.VISIBLE);
+//                        if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
+//                            setupMapFragmentView();
+//                        } else {
+//                            ActivityCompat
+//                                    .requestPermissions(MainActivity.this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
+//                        }
 
                         return true;
                     case R.id.Acc:

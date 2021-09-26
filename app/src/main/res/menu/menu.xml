@@ -6,12 +6,10 @@
         android:title="Trang chủ" />
     <item
         android:id="@+id/Map"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:title="Bản đồ" />
+        android:icon="@drawable/ic_baseline_notifications_24"
+        android:title="Thông báo" />
     <item
         android:id="@+id/Acc"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="Tài khoản" />
-
-
 </menu>

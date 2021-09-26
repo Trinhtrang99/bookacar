@@ -2,12 +2,6 @@ package com.example.bookacar.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import com.example.bookacar.BookActivity;
+
+import com.example.bookacar.HistoryActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.bookcar.ActivityBookCar;
 import com.example.bookacar.databinding.FragmentHomeBinding;
@@ -54,11 +49,15 @@ public class HomeFragment extends Fragment {
         binding.txtPhone.setText(preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
 
         binding.cvCar.setOnClickListener(view1 -> {
-            startActivity(new Intent(getActivity(), BookActivity.class));
+            startActivity(new Intent(getActivity(), ActivityBookCar.class));
         });
 
         binding.cvMotorcycle.setOnClickListener(view1 -> {
-            startActivity(new Intent(getActivity(), BookActivity.class));
+            startActivity(new Intent(getActivity(), ActivityBookCar.class));
+        });
+
+        binding.btHistory.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), HistoryActivity.class));
         });
     }
 }
