@@ -1,6 +1,7 @@
 package com.example.bookacar.admin;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,7 @@ import com.example.bookacar.util.BitmapUltil;
 
 import java.util.List;
 
-public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.DriverHolder>{
+public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.DriverHolder> {
 
     private List<Driver> drivers;
 
@@ -36,10 +37,14 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.DriverHold
 
     @Override
     public void onBindViewHolder(@NonNull DriverHolder holder, int position) {
+
         holder.binding.txtPhone.setText(drivers.get(position).getPhoneNumber());
         holder.binding.txtName.setText(drivers.get(position).getName());
         holder.binding.imgAvatar.setImageBitmap(BitmapUltil.getBitmap(drivers.get(position).getImage()));
         holder.binding.txtPassword.setText(drivers.get(position).getPassword());
+        holder.binding.idConfirm.setVisibility(View.GONE);
+
+
     }
 
     @Override
@@ -49,6 +54,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.DriverHold
 
     class DriverHolder extends RecyclerView.ViewHolder {
         ItemDriverAdminBinding binding;
+
         public DriverHolder(@NonNull ItemDriverAdminBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;

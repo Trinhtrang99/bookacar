@@ -1,20 +1,18 @@
 package com.example.bookacar.Account;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -32,10 +30,9 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-public class ActivityRegistion extends AppCompatActivity {
+public class ActivityRegistion extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ActivityRegistionBinding binding;
 
     private PhoneAuthProvider.ForceResendingToken forceResendingToken;
@@ -43,12 +40,30 @@ public class ActivityRegistion extends AppCompatActivity {
     private String verificationId;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+    String[] Type = {"Tài khoản người dùng", "Tài khoản dành cho tài xế"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registion);
+        binding.coursesspinner.setOnItemClickListener(this);
+        // Create the instance of ArrayAdapter
+        // having the list of courses
+        ArrayAdapter ad
+                = new ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                Type);
 
+        // set simple layout resource file
+        // for each item of spinner
+        ad.setDropDownViewResource(
+                android.R.layout
+                        .simple_spinner_dropdown_item);
+
+        // Set the ArrayAdapter (ad) data on the
+        // Spinner which binds data to spinner
+        binding.coursesspinner.setAdapter(ad);
         firebaseAuth = FirebaseAuth.getInstance();
 
         progressDialog = new ProgressDialog(this);
@@ -87,7 +102,7 @@ public class ActivityRegistion extends AppCompatActivity {
             database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                     .whereEqualTo(Constants.KEY_PHONE_NUMBER, phone)
                     .get()
-                    .addOnCompleteListener( task -> {
+                    .addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null
                                 && task.getResult().getDocuments().size() > 0) {
                             DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
@@ -103,7 +118,7 @@ public class ActivityRegistion extends AppCompatActivity {
         binding.btnSumbit.setOnClickListener(view -> {
             String code = binding.edtCode.getText().toString();
             if (!TextUtils.isEmpty(code)) {
-                verifyPhoneNumberWriteCode (verificationId, code);
+                verifyPhoneNumberWriteCode(verificationId, code);
             }
         });
 
@@ -117,7 +132,7 @@ public class ActivityRegistion extends AppCompatActivity {
         signInWithPhoneAuthCredential(credential);
     }
 
-    private void signInWithPhoneAuthCredential (PhoneAuthCredential credential) {
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         progressDialog.setMessage("Logging In...");
         progressDialog.show();
 
@@ -140,7 +155,7 @@ public class ActivityRegistion extends AppCompatActivity {
                 });
     }
 
-    private void startPhoneNumberVerification (String phone) {
+    private void startPhoneNumberVerification(String phone) {
         progressDialog.setMessage("Verifying Phone Number");
         progressDialog.show();
 
@@ -153,7 +168,7 @@ public class ActivityRegistion extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
 
-    private void resendVerification (String phone, PhoneAuthProvider.ForceResendingToken token) {
+    private void resendVerification(String phone, PhoneAuthProvider.ForceResendingToken token) {
         progressDialog.setMessage("Resending Code");
         progressDialog.show();
 
@@ -170,4 +185,13 @@ public class ActivityRegistion extends AppCompatActivity {
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> finish());
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        Toast.makeText(getApplicationContext(),
+//                Type[position],
+//                Toast.LENGTH_LONG)
+//                .show();
+
+    }
 }

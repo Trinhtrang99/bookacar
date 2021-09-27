@@ -1,14 +1,9 @@
 package com.example.bookacar.admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.bookacar.Account.Login;
+import androidx.databinding.DataBindingUtil;
+
 import com.example.bookacar.BaseActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.admin.model.Driver;
@@ -36,14 +31,11 @@ public class AdminActivity extends BaseActivity {
         drivers = new ArrayList<>();
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        binding.btnAddDriver.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(), EditActivity.class));
-        });
+//        binding.btnAddDriver.setOnClickListener(view -> {
+//            startActivity(new Intent(getApplicationContext(), EditActivity.class));
+//        });
 
-        binding.btnLogout.setOnClickListener(view -> {
-            preferenceManager.clear();
-            startActivity(new Intent(AdminActivity.this, Login.class));
-        });
+
     }
 
     private void getFoods () {

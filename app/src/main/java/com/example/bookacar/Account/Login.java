@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.bookacar.MainActivity;
 import com.example.bookacar.R;
-import com.example.bookacar.admin.AdminActivity;
+import com.example.bookacar.admin.HomAd;
 import com.example.bookacar.databinding.ActivityLoginBinding;
 import com.example.bookacar.driver.DriverActivity;
 import com.example.bookacar.util.Constants;
@@ -30,15 +30,14 @@ public class Login extends AppCompatActivity {
 
         if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
             if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
-                Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomAd.class);
                 startActivity(intent);
                 finish();
             } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
                 Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
                 startActivity(intent);
                 finish();
-            }
-            else {
+            } else {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -54,7 +53,7 @@ public class Login extends AppCompatActivity {
             startActivity(i);
         });
         binding.btnlogin.setOnClickListener(v -> {
-           signIn();
+            signIn();
         });
 
         binding.chkRememberMe.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -62,14 +61,14 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void signIn () {
+    private void signIn() {
         binding.progress.setVisibility(View.VISIBLE);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                 .whereEqualTo(Constants.KEY_PHONE_NUMBER, binding.edtPhone.getText().toString())
                 .whereEqualTo(Constants.KEY_PASSWORD, binding.edtPassword.getText().toString())
                 .get()
-                .addOnCompleteListener( task -> {
+                .addOnCompleteListener(task -> {
                     binding.progress.setVisibility(View.GONE);
                     if (task.isSuccessful() && task.getResult() != null
                             && task.getResult().getDocuments().size() > 0) {
@@ -79,7 +78,7 @@ public class Login extends AppCompatActivity {
                         preferenceManager.putString(Constants.KEY_TYPE_USER, documentSnapshot.getString(Constants.KEY_TYPE_USER));
 
                         if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
-                            Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), HomAd.class);
                             startActivity(intent);
                             finish();
                         } else if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
