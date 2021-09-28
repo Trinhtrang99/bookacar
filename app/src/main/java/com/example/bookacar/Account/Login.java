@@ -28,21 +28,23 @@ public class Login extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        /*if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
-            if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
-                Intent intent = new Intent(getApplicationContext(), HomAd.class);
-                startActivity(intent);
-                finish();
-            } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
-                Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+        if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
+            if (preferenceManager.getString(Constants.KEY_TYPE_USER) != null) {
+                if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+                    Intent intent = new Intent(getApplicationContext(), HomAd.class);
+                    startActivity(intent);
+                    finish();
+                } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
+                    Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        }*/
+        }
 
         binding.forgotBtn.setOnClickListener(v -> {
             Intent i = new Intent(Login.this, ActivityFogotPass.class);

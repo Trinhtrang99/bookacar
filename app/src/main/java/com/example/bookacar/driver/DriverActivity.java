@@ -10,6 +10,7 @@ import com.example.bookacar.BaseActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.ActivityDriverBinding;
 import com.example.bookacar.driver.model.UserBook;
+import com.example.bookacar.person.ChangeInfActivity;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,6 +37,10 @@ public class DriverActivity extends BaseActivity {
         binding.btnLogout.setOnClickListener(view -> {
             preferenceManager.clear();
             startActivity(new Intent(this, Login.class));
+        });
+
+        binding.btnChangeInfo.setOnClickListener(view -> {
+            startActivity(new Intent(this, ChangeInfActivity.class));
         });
 
         getUserBook();

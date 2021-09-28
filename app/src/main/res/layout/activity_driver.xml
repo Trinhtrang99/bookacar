@@ -12,8 +12,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_user_book"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btn_change_info"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <Button
+            android:id="@+id/btn_change_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thay đổi thông tin"
+            android:layout_above="@+id/btn_logout"/>
 
         <Button
             android:id="@+id/btn_logout"
