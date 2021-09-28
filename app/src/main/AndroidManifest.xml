@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION " />
 
     <application
         android:allowBackup="true"
@@ -22,10 +20,10 @@
         <activity android:name=".driver.BookCarActivity" />
         <activity android:name=".person.ChangeInfActivity" />
         <activity android:name=".admin.ConfimDriverActivity" />
-        <activity android:name=".admin.HomAd" /> <!-- <activity android:name=".driver.MainDriver" /> -->
+        <activity android:name=".admin.HomAd" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".bookcar.ActivityBookCar" />
-        <activity android:name=".test.ChangePositionMap" /> <!-- <activity android:name=".MainActivity2"></activity> -->
+        <activity android:name=".test.ChangePositionMap" />
         <activity
             android:name=".driver.DriverActivity"
             android:exported="true" />
@@ -38,7 +36,8 @@
         <activity
             android:name=".admin.AdminActivity"
             android:exported="true" />
-        <activity android:name=".driver.MainDriver">
+        <activity android:name=".driver.MainDriver" />
+        <activity android:name=".Account.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
