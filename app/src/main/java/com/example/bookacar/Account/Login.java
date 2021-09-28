@@ -28,7 +28,7 @@ public class Login extends AppCompatActivity {
 
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
+        /*if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
             if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
                 Intent intent = new Intent(getApplicationContext(), HomAd.class);
                 startActivity(intent);
@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }
+        }*/
 
         binding.forgotBtn.setOnClickListener(v -> {
             Intent i = new Intent(Login.this, ActivityFogotPass.class);

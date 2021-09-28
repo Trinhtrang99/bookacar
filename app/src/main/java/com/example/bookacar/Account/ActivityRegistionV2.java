@@ -28,13 +28,21 @@ public class ActivityRegistionV2 extends AppCompatActivity {
     }
 
     private void registerAccount () {
+        String typeUser = getIntent().getStringExtra("typeUser");
         binding.progress.setVisibility(View.VISIBLE);
         if (binding.edtPassword.getText().toString().equals(binding.edtPasswordAgain.getText().toString())) {
             FirebaseFirestore database = FirebaseFirestore.getInstance();
             HashMap<String, Object> user = new HashMap<>();
             user.put(Constants.KEY_PHONE_NUMBER, getIntent().getStringExtra("Phone"));
             user.put(Constants.KEY_PASSWORD, binding.edtPassword.getText().toString());
-            user.put(Constants.KEY_TYPE_USER, "user");
+            user.put(Constants.KEY_TYPE_USER, typeUser);
+            if (typeUser.equals(Constants.TYPE_DRIVER)) {
+                HashMap<String, Object> userDriver = new HashMap<>();
+                userDriver.put(Constants.KEY_CONFIRM_USER_DRIVER, false);
+                database.collection(Constants.KEY_COLLECTION_USER_DRIVER)
+                        .document(getIntent().getStringExtra("Phone"))
+                        .set(userDriver);
+            }
             database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                     .add(user)
                     .addOnSuccessListener(documentReference -> {

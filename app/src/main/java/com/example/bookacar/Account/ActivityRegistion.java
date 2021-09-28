@@ -32,7 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
-public class ActivityRegistion extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ActivityRegistion extends AppCompatActivity {
     ActivityRegistionBinding binding;
 
     private PhoneAuthProvider.ForceResendingToken forceResendingToken;
@@ -40,29 +40,22 @@ public class ActivityRegistion extends AppCompatActivity implements AdapterView.
     private String verificationId;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
-    String[] Type = {"Tài khoản người dùng", "Tài khoản dành cho tài xế"};
+    private String[] Type = {"Tài khoản người dùng", "Tài khoản dành cho tài xế"};
+    private String typeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registion);
-        binding.coursesspinner.setOnItemClickListener(this);
-        // Create the instance of ArrayAdapter
-        // having the list of courses
         ArrayAdapter ad
                 = new ArrayAdapter(
                 this,
                 android.R.layout.simple_spinner_item,
                 Type);
-
-        // set simple layout resource file
-        // for each item of spinner
         ad.setDropDownViewResource(
                 android.R.layout
                         .simple_spinner_dropdown_item);
 
-        // Set the ArrayAdapter (ad) data on the
-        // Spinner which binds data to spinner
         binding.coursesspinner.setAdapter(ad);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -84,9 +77,6 @@ public class ActivityRegistion extends AppCompatActivity implements AdapterView.
             @Override
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken token) {
                 super.onCodeSent(s, token);
-
-                Log.d("KMFG", "onCodeSent: " + s);
-
                 verificationId = s;
                 forceResendingToken = token;
                 progressDialog.dismiss();
@@ -122,6 +112,19 @@ public class ActivityRegistion extends AppCompatActivity implements AdapterView.
             }
         });
 
+        binding.coursesspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Toast.makeText(ActivityRegistion.this, Type[position] + "==", Toast.LENGTH_SHORT).show();
+                typeUser = Type[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+
+        });
     }
 
     private void verifyPhoneNumberWriteCode(String verificationId, String code) {
@@ -144,6 +147,7 @@ public class ActivityRegistion extends AppCompatActivity implements AdapterView.
                         String phone = firebaseAuth.getCurrentUser().getPhoneNumber();
                         Intent intent = new Intent(getApplicationContext(), ActivityRegistionV2.class);
                         intent.putExtra("Phone", phone);
+                        intent.putExtra("typeUser", typeUser);
                         someActivityResultLauncher.launch(intent);
                     }
                 })
@@ -185,13 +189,4 @@ public class ActivityRegistion extends AppCompatActivity implements AdapterView.
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> finish());
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Toast.makeText(getApplicationContext(),
-//                Type[position],
-//                Toast.LENGTH_LONG)
-//                .show();
-
-    }
 }
