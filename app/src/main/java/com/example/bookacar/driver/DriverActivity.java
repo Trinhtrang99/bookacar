@@ -1,16 +1,13 @@
 package com.example.bookacar.driver;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.databinding.DataBindingUtil;
 
 import com.example.bookacar.Account.Login;
 import com.example.bookacar.BaseActivity;
 import com.example.bookacar.R;
-import com.example.bookacar.admin.DriverAdapter;
-import com.example.bookacar.admin.model.Driver;
 import com.example.bookacar.databinding.ActivityDriverBinding;
 import com.example.bookacar.driver.model.UserBook;
 import com.example.bookacar.util.Constants;

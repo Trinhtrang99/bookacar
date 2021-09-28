@@ -18,42 +18,18 @@ import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PersonFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PersonFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public PersonFragment() {
         // Required empty public constructor
     }
 
-    public static PersonFragment newInstance(String param1, String param2) {
-        PersonFragment fragment = new PersonFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     FragmentPersonBinding binding;
@@ -80,6 +56,13 @@ public class PersonFragment extends Fragment {
             preferenceManager.clear();
             getActivity().finish();
             getActivity().startActivity(new Intent(getContext(), Login.class));
+        });
+        binding.txtInfo.setOnClickListener(v -> {
+            Intent i = new Intent(getContext(),ChangeInfActivity.class);
+            //TK DRIVER HOẶC TK USER
+            i.putExtra("loaiTK","");
+            startActivity(i);
+
         });
     }
 }

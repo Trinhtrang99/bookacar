@@ -18,9 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookACar">
-        <activity android:name=".admin.ConfimDriverActivity"></activity>
-        <activity android:name=".admin.HomAd" />
-        <activity android:name=".driver.MainDriver" />
+        <activity android:name=".driver.ThongKeActivity"></activity>
+        <activity android:name=".driver.BookCarActivity" />
+        <activity android:name=".person.ChangeInfActivity" />
+        <activity android:name=".admin.ConfimDriverActivity" />
+        <activity android:name=".admin.HomAd" /> <!-- <activity android:name=".driver.MainDriver" /> -->
         <activity android:name=".HistoryActivity" />
         <activity android:name=".bookcar.ActivityBookCar" />
         <activity android:name=".test.ChangePositionMap" /> <!-- <activity android:name=".MainActivity2"></activity> -->
@@ -36,7 +38,7 @@
         <activity
             android:name=".admin.AdminActivity"
             android:exported="true" />
-        <activity android:name=".Account.Login">
+        <activity android:name=".driver.MainDriver">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
