@@ -6,13 +6,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.bookacar.BaseActivity;
@@ -53,33 +50,28 @@ public class ChangeInfActivity extends BaseActivity {
 
     private void updateAccount() {
         showProgressDialog(true);
-        //if (binding.edtPassword.getText().toString().equals(binding.edtPasswordAgain.getText().toString())) {
-            FirebaseFirestore database = FirebaseFirestore.getInstance();
-            HashMap<String, Object> user = new HashMap<>();
-            user.put(Constants.KEY_NAME, binding.edtName.getText().toString());
-            user.put(Constants.KEY_PHONE_NUMBER, binding.edtSdt.getText().toString());
-            user.put(Constants.KEY_IMAGE, encodeImg);
-            database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                    .whereEqualTo(Constants.KEY_PHONE_NUMBER, preferenceManager.getString(Constants.KEY_PHONE_NUMBER))
-                    .get()
-                    .addOnCompleteListener( task -> {
-                        if (task.isSuccessful() && task.getResult() != null
-                                && task.getResult().getDocuments().size() > 0) {
-                            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> user = new HashMap<>();
+        user.put(Constants.KEY_NAME, binding.edtName.getText().toString());
+        user.put(Constants.KEY_PHONE_NUMBER, binding.edtSdt.getText().toString());
+        user.put(Constants.KEY_IMAGE, encodeImg);
+        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .whereEqualTo(Constants.KEY_PHONE_NUMBER, preferenceManager.getString(Constants.KEY_PHONE_NUMBER))
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null
+                            && task.getResult().getDocuments().size() > 0) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
 
-                            database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                                    .document(documentSnapshot.getId())
-                                    .update(user)
-                                    .addOnSuccessListener(documentReference -> {
-                                        showProgressDialog(false);
-                                        onBackPressed();
-                                    });
-
-                        }
-                    });
-        /*} else {
-            Toast.makeText(getApplicationContext(), "Khong dung", Toast.LENGTH_SHORT).show();
-        }*/
+                        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                                .document(documentSnapshot.getId())
+                                .update(user)
+                                .addOnSuccessListener(documentReference -> {
+                                    showProgressDialog(false);
+                                    onBackPressed();
+                                });
+                    }
+                });
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
@@ -103,7 +95,7 @@ public class ChangeInfActivity extends BaseActivity {
             }
     );
 
-    private String encodeImage (Bitmap bitmap) {
+    private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);

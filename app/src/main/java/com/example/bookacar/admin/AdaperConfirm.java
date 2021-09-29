@@ -1,5 +1,6 @@
 package com.example.bookacar.admin;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ import java.util.List;
 
 public class AdaperConfirm extends RecyclerView.Adapter<AdaperConfirm.DriverHolder> {
     private List<Confirm> confirmList;
+    private IRecyclerView recyclerView;
+
+    public void setRecyclerView(IRecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
 
     public AdaperConfirm(List<Confirm> confirmList) {
         this.confirmList = confirmList;
@@ -40,11 +46,16 @@ public class AdaperConfirm extends RecyclerView.Adapter<AdaperConfirm.DriverHold
         holder.binding.txtName.setText(confirmList.get(position).getName());
         holder.binding.imgAvatar.setImageBitmap(BitmapUltil.getBitmap(confirmList.get(position).getImage()));
         holder.binding.acticity.setVisibility(View.GONE);
-        if (confirmList.get(position).getConfirm()) {
+        if (!confirmList.get(position).getConfirm()) {
             holder.binding.idConfirm.setEnabled(true);
         } else {
             holder.binding.idConfirm.setEnabled(false);
         }
+
+        holder.binding.idConfirm.setOnClickListener(view -> {
+            /*Log.d("KMFG", "OKOKO");*/
+            recyclerView.confirmOnClick(position);
+        });
     }
 
     @Override
@@ -59,5 +70,9 @@ public class AdaperConfirm extends RecyclerView.Adapter<AdaperConfirm.DriverHold
             super(itemView.getRoot());
             binding = itemView;
         }
+    }
+
+    public interface IRecyclerView {
+        void confirmOnClick(Integer position);
     }
 }

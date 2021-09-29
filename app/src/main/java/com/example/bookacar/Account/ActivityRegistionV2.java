@@ -36,12 +36,10 @@ public class ActivityRegistionV2 extends AppCompatActivity {
             user.put(Constants.KEY_PHONE_NUMBER, getIntent().getStringExtra("Phone"));
             user.put(Constants.KEY_PASSWORD, binding.edtPassword.getText().toString());
             user.put(Constants.KEY_TYPE_USER, typeUser);
+            user.put(Constants.KEY_NAME, binding.edtName.getText().toString());
+
             if (typeUser.equals(Constants.TYPE_DRIVER)) {
-                HashMap<String, Object> userDriver = new HashMap<>();
-                userDriver.put(Constants.KEY_CONFIRM_USER_DRIVER, false);
-                database.collection(Constants.KEY_COLLECTION_USER_DRIVER)
-                        .document(getIntent().getStringExtra("Phone"))
-                        .set(userDriver);
+                user.put(Constants.KEY_CONFIRM_USER_DRIVER, false);
             }
             database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                     .add(user)

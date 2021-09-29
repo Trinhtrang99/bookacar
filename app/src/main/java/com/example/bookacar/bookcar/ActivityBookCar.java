@@ -23,17 +23,25 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.bookacar.BaseActivity;
 import com.example.bookacar.R;
+import com.example.bookacar.driver.BookCarActivity;
 import com.example.bookacar.map.GPSLocation;
 import com.example.bookacar.test.ChangePositionMap;
+import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.here.android.mpa.common.GeoCoordinate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ActivityBookCar extends AppCompatActivity {
+import java.util.Date;
+import java.util.HashMap;
+
+public class ActivityBookCar extends BaseActivity {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String[] RUNTIME_PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -55,6 +63,7 @@ public class ActivityBookCar extends AppCompatActivity {
     public static Double log;
     public static Double txtDonlat, txtDonLong;
     private Button m_calculateRouteButton;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +74,8 @@ public class ActivityBookCar extends AppCompatActivity {
         txt_DiemDon = findViewById(R.id.txt_diemDon);
         edtDen = findViewById(R.id.edtDen);
 
-        txtChangeDon = findViewById(R.id.txtChangeDon);
-        txtChangeDen = findViewById(R.id.txtChangeDen);
+        preferenceManager = new PreferenceManager(getApplicationContext());
+
         sheetBehavior = BottomSheetBehavior.from(mBottomSheetLayout);
         GPSLocation location = new GPSLocation(this);
         txtlocation = location.getLatitude() + "," + location.getLongitude();
@@ -100,19 +109,18 @@ public class ActivityBookCar extends AppCompatActivity {
             }
         });
 
+        txtChangeDon = findViewById(R.id.txtChangeDon);
+        txtChangeDen = findViewById(R.id.txtChangeDen);
         txtChangeDen.setOnClickListener(v -> {
             Intent i = new Intent(this, ChangePositionMap.class);
             startActivityForResult(i, 99);
-
         });
         txtChangeDon.setOnClickListener(v -> {
-
             Intent i = new Intent(this, ChangePositionMap.class);
             startActivityForResult(i, 100);
         });
 
         m_calculateRouteButton.setOnClickListener(v -> {
-
             if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
                 m_calculateRouteButton.setEnabled(true);
                 GeoCoordinate geoCoordinateStart = new GeoCoordinate(lat, log);
@@ -124,8 +132,10 @@ public class ActivityBookCar extends AppCompatActivity {
                 } else {
                     m_mapFragmentView.calculateRoute();
                 }
+
+                addBook();
             } else {
-                m_calculateRouteButton.setEnabled(false);
+               // m_calculateRouteButton.setEnabled(false);
             }
 
 
@@ -137,6 +147,23 @@ public class ActivityBookCar extends AppCompatActivity {
             ActivityCompat
                     .requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
         }
+    }
+
+    private void addBook () {
+        showProgressDialog(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String, Object> books = new HashMap<>();
+        books.put(Constants.KEY_LOCATION_START, txt_DiemDon.getText().toString());
+        books.put(Constants.KEY_LOCATION_END, edtDen.getText().toString());
+        books.put(Constants.KEY_PHONE_NUMBER, preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
+        books.put(Constants.KEY_DATE, new Date());
+        db.collection(Constants.KEY_COLLECTION_BOOK)
+                .add(books)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    showProgressDialog(false);
+                    //finish();
+                });
     }
 
     private void setupMapFragmentView() {

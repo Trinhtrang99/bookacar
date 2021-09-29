@@ -10,14 +10,17 @@ import androidx.databinding.DataBindingUtil;
 import com.example.bookacar.Account.Login;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.ActivityHomAdBinding;
+import com.example.bookacar.util.PreferenceManager;
 
 public class HomAd extends AppCompatActivity {
-    ActivityHomAdBinding binding;
+    private ActivityHomAdBinding binding;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_hom_ad);
+        preferenceManager = new PreferenceManager(getApplicationContext());
         binding.cvCar.setOnClickListener(v -> {
             startActivity(new Intent(this, ConfimDriverActivity.class));
         });
@@ -27,6 +30,7 @@ public class HomAd extends AppCompatActivity {
             startActivity(i);
         });
         binding.logout.setOnClickListener(view -> {
+            preferenceManager.clear();
             startActivity(new Intent(this, Login.class));
         });
         binding.cvUser.setOnClickListener(v -> {

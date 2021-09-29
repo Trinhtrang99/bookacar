@@ -15,9 +15,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.bookacar.R;
 import com.example.bookacar.bookcar.FragmentBookCar;
+import com.example.bookacar.databinding.ActivityBookCar2Binding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class BookCarActivity extends AppCompatActivity {
@@ -36,11 +38,12 @@ public class BookCarActivity extends AppCompatActivity {
     private BottomSheetBehavior sheetBehavior;
     private ImageView header_Arrow_Image;
     private TextView txt_DiemDon;
+    private ActivityBookCar2Binding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_book_car2);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_car2);
         initView();
         tvDon.setVisibility(View.INVISIBLE);
         tvDen.setVisibility(View.INVISIBLE);
