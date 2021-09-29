@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import com.example.bookacar.Account.Login;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.ActivityHomAdBinding;
+import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 
 public class HomAd extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class HomAd extends AppCompatActivity {
         });
         binding.cvListDriver.setOnClickListener(v -> {
             Intent i = new Intent(this, AdminActivity.class);
-            i.putExtra("DRIVER", 1);
+            i.putExtra(Constants.KEY_TYPE_USER, Constants.INTENT_DRIVER);
             startActivity(i);
         });
         binding.logout.setOnClickListener(view -> {
@@ -35,7 +36,7 @@ public class HomAd extends AppCompatActivity {
         });
         binding.cvUser.setOnClickListener(v -> {
             Intent i = new Intent(this, AdminActivity.class);
-            i.putExtra("DRIVER", 0);
+            i.putExtra(Constants.KEY_TYPE_USER, Constants.INTENT_USER);
             startActivity(i);
         });
     }

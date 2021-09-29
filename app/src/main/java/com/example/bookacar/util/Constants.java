@@ -7,6 +7,7 @@ public class Constants {
     public final static String KEY_COLLECTION_ACCOUNT = "accounts";
     public final static String KEY_TYPE_USER = "type";
     public final static String TYPE_DRIVER = "Tài khoản dành cho tài xế";
+    public final static String TYPE_USER = "Tài khoản người dùng";
     public final static String TYPE_ADMIN = "admin";
     public final static String KEY_NAME = "name";
     public final static String KEY_IMAGE = "image";
@@ -15,6 +16,8 @@ public class Constants {
     public final static String KEY_LOCATION_END = "locationEnd";
     public final static String KEY_CONFIRM_USER_DRIVER = "confirmUserDriver";
     public final static String KEY_DATE = "dates";
+    public final static String INTENT_DRIVER = "DRIVER";
+    public final static String INTENT_USER = "USER";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";

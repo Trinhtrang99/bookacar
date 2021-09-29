@@ -21,7 +21,7 @@ public class AdminActivity extends BaseActivity {
     private ActivityAdminBinding binding;
     private DriverAdapter adapter;
     private List<Driver> drivers;
-    private PreferenceManager preferenceManager;
+    private String typeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class AdminActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_admin);
 
         drivers = new ArrayList<>();
-        preferenceManager = new PreferenceManager(getApplicationContext());
+        typeUser = getIntent().getStringExtra(Constants.KEY_TYPE_USER);
 
 //        binding.btnAddDriver.setOnClickListener(view -> {
 //            startActivity(new Intent(getApplicationContext(), EditActivity.class));
@@ -41,27 +41,53 @@ public class AdminActivity extends BaseActivity {
     private void getFoods () {
         showProgressDialog(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .whereEqualTo(Constants.KEY_TYPE_USER, Constants.TYPE_DRIVER)
-                .get()
-                .addOnCompleteListener(task -> {
-                    drivers.clear();
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                        Driver driver = new Driver(
-                                queryDocumentSnapshot.getId(),
-                                queryDocumentSnapshot.getString(Constants.KEY_IMAGE),
-                                queryDocumentSnapshot.getString(Constants.KEY_NAME),
-                                queryDocumentSnapshot.getString(Constants.KEY_PASSWORD),
-                                queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER)
-                        );
-                        drivers.add(driver);
-                    }
 
-                    adapter = new DriverAdapter(drivers);
-                    binding.rvDriver.setAdapter(adapter);
+        if (typeUser.equals(Constants.INTENT_DRIVER)) {
+            db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                    .whereEqualTo(Constants.KEY_TYPE_USER, Constants.TYPE_DRIVER)
+                    .whereEqualTo(Constants.KEY_CONFIRM_USER_DRIVER, true)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        drivers.clear();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            Driver driver = new Driver(
+                                    queryDocumentSnapshot.getId(),
+                                    queryDocumentSnapshot.getString(Constants.KEY_IMAGE),
+                                    queryDocumentSnapshot.getString(Constants.KEY_NAME),
+                                    queryDocumentSnapshot.getString(Constants.KEY_PASSWORD),
+                                    queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER)
+                            );
+                            drivers.add(driver);
+                        }
 
-                    showProgressDialog(false);
-                });
+                        adapter = new DriverAdapter(drivers);
+                        binding.rvDriver.setAdapter(adapter);
+
+                        showProgressDialog(false);
+                    });
+        } else if (typeUser.equals(Constants.INTENT_USER)) {
+            db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                    .whereEqualTo(Constants.KEY_TYPE_USER, Constants.TYPE_USER)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        drivers.clear();
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            Driver driver = new Driver(
+                                    queryDocumentSnapshot.getId(),
+                                    queryDocumentSnapshot.getString(Constants.KEY_IMAGE),
+                                    queryDocumentSnapshot.getString(Constants.KEY_NAME),
+                                    queryDocumentSnapshot.getString(Constants.KEY_PASSWORD),
+                                    queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER)
+                            );
+                            drivers.add(driver);
+                        }
+
+                        adapter = new DriverAdapter(drivers);
+                        binding.rvDriver.setAdapter(adapter);
+
+                        showProgressDialog(false);
+                    });
+        }
     }
 
     @Override
