@@ -13,9 +13,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.FragmentHomeDriverBinding;
+import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 
 public class HomeDriverFragment extends Fragment {
-    FragmentHomeDriverBinding binding;
+    private FragmentHomeDriverBinding binding;
+    private PreferenceManager preferenceManager;
 
     public HomeDriverFragment() {
         // Required empty public constructor
@@ -37,10 +40,14 @@ public class HomeDriverFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        preferenceManager = new PreferenceManager(getContext());
+        binding.txtPhone.setText(preferenceManager.getString(preferenceManager.getString(Constants.KEY_PHONE_NUMBER)));
         binding.cvMotorcycle.setOnClickListener(v -> {
             Intent i = new Intent(getContext(), BookCarActivity.class);
             startActivity(i);
         });
+
         binding.cvCar.setOnClickListener(v -> {
             Intent i = new Intent(getContext(), ThongKeActivity.class);
             startActivity(i);

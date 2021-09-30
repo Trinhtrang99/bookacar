@@ -17,7 +17,7 @@ import com.example.bookacar.person.PersonFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainDriver extends AppCompatActivity {
-    ActivityMainDriverBinding binding;
+    private ActivityMainDriverBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

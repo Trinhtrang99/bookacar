@@ -12,6 +12,7 @@ import com.example.bookacar.R;
 import com.example.bookacar.admin.HomAd;
 import com.example.bookacar.databinding.ActivityLoginBinding;
 import com.example.bookacar.driver.DriverActivity;
+import com.example.bookacar.driver.MainDriver;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,7 +36,7 @@ public class Login extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
-                    Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainDriver.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -84,7 +85,7 @@ public class Login extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
-                            Intent intent = new Intent(getApplicationContext(), DriverActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), MainDriver.class);
                             startActivity(intent);
                             finish();
                         } else {
