@@ -26,9 +26,6 @@
         <activity android:name=".bookcar.ActivityBookCar" />
         <activity android:name=".test.ChangePositionMap" />
         <activity
-            android:name=".driver.DriverActivity"
-            android:exported="true" />
-        <activity
             android:name=".BookActivity"
             android:exported="true" />
         <activity

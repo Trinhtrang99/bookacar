@@ -2,15 +2,19 @@ package com.example.bookacar.driver.model;
 
 public class UserBook {
     private String id;
+    private String name;
     private String locationStart;
     private String locationEnd;
     private String phoneNumber;
+    private String totalMoney;
 
-    public UserBook(String id, String locationStart, String locationEnd, String phoneNumber) {
+    public UserBook(String id, String name, String locationStart, String locationEnd, String phoneNumber, String totalMoney) {
         this.id = id;
+        this.name = name;
         this.locationStart = locationStart;
         this.locationEnd = locationEnd;
         this.phoneNumber = phoneNumber;
+        this.totalMoney = totalMoney;
     }
 
     public String getId() {
@@ -43,5 +47,21 @@ public class UserBook {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

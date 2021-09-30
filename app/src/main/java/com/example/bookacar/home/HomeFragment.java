@@ -49,11 +49,15 @@ public class HomeFragment extends Fragment {
         binding.txtPhone.setText(preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
 
         binding.cvCar.setOnClickListener(view1 -> {
-            startActivity(new Intent(getActivity(), ActivityBookCar.class));
+            Intent intent = new Intent(getActivity(), ActivityBookCar.class);
+            intent.putExtra(Constants.KEY_TYPE_BOOK, Constants.INTENT_CAR);
+            startActivity(intent);
         });
 
         binding.cvMotorcycle.setOnClickListener(view1 -> {
-            startActivity(new Intent(getActivity(), ActivityBookCar.class));
+            Intent intent = new Intent(getActivity(), ActivityBookCar.class);
+            intent.putExtra(Constants.KEY_TYPE_BOOK, Constants.INTENT_MOTO);
+            startActivity(intent);
         });
 
         binding.btHistory.setOnClickListener(v -> {

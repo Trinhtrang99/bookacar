@@ -11,9 +11,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bookacar.BaseFragment;
+import com.example.bookacar.ICallBackBookCar;
 import com.example.bookacar.R;
 import com.example.bookacar.map.GPSLocation;
+import com.example.bookacar.util.Constants;
 import com.github.kevinsawicki.http.HttpRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.here.android.mpa.common.GeoBoundingBox;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.GeoPolyline;
@@ -35,6 +39,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.graphics.Color.argb;
@@ -62,6 +68,11 @@ public class FragmentBookCar {
     public FTCRRouter m_router;
     private FTCRRouter.CancellableTask m_routeTask;
     private Long lengthPtP;
+    private Long totalMoney;
+
+    public Long getTotalMoney() {
+        return totalMoney;
+    }
 
     public FragmentBookCar(AppCompatActivity activity) {
         m_activity = activity;
@@ -181,7 +192,7 @@ public class FragmentBookCar {
         });
     }
 
-    public void calculateRoute() {
+    public void calculateRoute(ICallBackBookCar iCallBackBookCar) {
 
         FTCRRouteOptions routeOptions = new FTCRRouteOptions();
         /* Other transport modes are also available e.g Pedestrian */
@@ -211,6 +222,10 @@ public class FragmentBookCar {
                 if (errorResponse.getErrorCode() == RoutingError.NONE) {
                     lengthPtP = routeResults.get(0).getLength();
                     txtLength.setText(lengthPtP/1000 + " km");
+                    totalMoney = (lengthPtP/1000) * 20000;
+                    m_calculateRouteButton.setText("Đặt xe");
+
+                    iCallBackBookCar.hideProgressDialog();
 
                     if (routeResults.get(0) != null) {
                         /* Create a FTCRMapRoute so that it can be placed on the map */

@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.bookacar.BaseActivity;
+import com.example.bookacar.ICallBackBookCar;
 import com.example.bookacar.R;
 import com.example.bookacar.driver.BookCarActivity;
 import com.example.bookacar.map.GPSLocation;
@@ -41,7 +42,7 @@ import org.json.JSONObject;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ActivityBookCar extends BaseActivity {
+public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
     private static final String[] RUNTIME_PERMISSIONS = {
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -64,6 +65,7 @@ public class ActivityBookCar extends BaseActivity {
     public static Double txtDonlat, txtDonLong;
     private Button m_calculateRouteButton;
     private PreferenceManager preferenceManager;
+    private String typeBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class ActivityBookCar extends BaseActivity {
         edtDen = findViewById(R.id.edtDen);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+        typeBook = getIntent().getStringExtra(Constants.KEY_TYPE_BOOK);
 
         sheetBehavior = BottomSheetBehavior.from(mBottomSheetLayout);
         GPSLocation location = new GPSLocation(this);
@@ -120,6 +123,7 @@ public class ActivityBookCar extends BaseActivity {
             startActivityForResult(i, 100);
         });
 
+        m_calculateRouteButton.setText("Xem thông tin");
         m_calculateRouteButton.setOnClickListener(v -> {
             if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
                 m_calculateRouteButton.setEnabled(true);
@@ -129,16 +133,15 @@ public class ActivityBookCar extends BaseActivity {
                 if (m_mapFragmentView.m_map != null && m_mapFragmentView.m_mapRoute != null) {
                     m_mapFragmentView.m_map.removeMapObject(m_mapFragmentView.m_mapRoute);
                     m_mapFragmentView.m_mapRoute = null;
+                    m_calculateRouteButton.setText("Xem thông tin");
+                    addBook();
                 } else {
-                    m_mapFragmentView.calculateRoute();
+                    showProgressDialog(true);
+                    m_mapFragmentView.calculateRoute(this);
                 }
-
-                addBook();
             } else {
-               // m_calculateRouteButton.setEnabled(false);
+                // m_calculateRouteButton.setEnabled(false);
             }
-
-
         });
 
         if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
@@ -156,6 +159,9 @@ public class ActivityBookCar extends BaseActivity {
         books.put(Constants.KEY_LOCATION_START, txt_DiemDon.getText().toString());
         books.put(Constants.KEY_LOCATION_END, edtDen.getText().toString());
         books.put(Constants.KEY_PHONE_NUMBER, preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
+        books.put(Constants.KEY_TOTAL_MONEY, m_mapFragmentView.getTotalMoney());
+        books.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+        books.put(Constants.KEY_TYPE_BOOK, typeBook);
         books.put(Constants.KEY_DATE, new Date());
         db.collection(Constants.KEY_COLLECTION_BOOK)
                 .add(books)
@@ -270,5 +276,10 @@ public class ActivityBookCar extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        showProgressDialog(false);
     }
 }

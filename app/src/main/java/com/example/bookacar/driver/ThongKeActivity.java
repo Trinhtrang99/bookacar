@@ -1,6 +1,7 @@
 package com.example.bookacar.driver;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -16,7 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThongKeActivity extends BaseActivity {
+public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRecyclerViewOnClick {
 
     private ActivityThongKeBinding binding;
     private List<UserBook> userBooks;
@@ -42,17 +43,26 @@ public class ThongKeActivity extends BaseActivity {
                     for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                         UserBook userBook = new UserBook(
                                 queryDocumentSnapshot.getId(),
+                                queryDocumentSnapshot.getString(Constants.KEY_NAME),
                                 queryDocumentSnapshot.getString(Constants.KEY_LOCATION_START),
                                 queryDocumentSnapshot.getString(Constants.KEY_LOCATION_END),
-                                queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER)
+                                queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER),
+                                queryDocumentSnapshot.getLong(Constants.KEY_TOTAL_MONEY) + " VND"
                         );
+
                         userBooks.add(userBook);
                     }
 
                     adapter = new UserBookAdapter(userBooks);
+                    adapter.setRecyclerViewOnClick(this::confirmOnClick);
                     binding.recyclerView.setAdapter(adapter);
 
                     showProgressDialog(false);
                 });
+    }
+
+    @Override
+    public void confirmOnClick(Integer position) {
+        Toast.makeText(ThongKeActivity.this, position + "===", Toast.LENGTH_SHORT).show();
     }
 }

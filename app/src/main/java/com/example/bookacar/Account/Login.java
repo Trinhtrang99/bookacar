@@ -11,7 +11,6 @@ import com.example.bookacar.MainActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.admin.HomAd;
 import com.example.bookacar.databinding.ActivityLoginBinding;
-import com.example.bookacar.driver.DriverActivity;
 import com.example.bookacar.driver.MainDriver;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
@@ -79,6 +78,7 @@ public class Login extends AppCompatActivity {
                         preferenceManager.putString(Constants.KEY_PHONE_NUMBER, documentSnapshot.getString(Constants.KEY_PHONE_NUMBER));
                         preferenceManager.putString(Constants.KEY_PASSWORD, documentSnapshot.getString(Constants.KEY_PASSWORD));
                         preferenceManager.putString(Constants.KEY_TYPE_USER, documentSnapshot.getString(Constants.KEY_TYPE_USER));
+                        preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
 
                         if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
                             Intent intent = new Intent(getApplicationContext(), HomAd.class);

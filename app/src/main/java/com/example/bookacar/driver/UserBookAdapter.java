@@ -17,6 +17,11 @@ import java.util.List;
 public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBookHolder>{
 
     private List<UserBook> userBooks;
+    private IRecyclerViewOnClick recyclerViewOnClick;
+
+    public void setRecyclerViewOnClick(IRecyclerViewOnClick recyclerViewOnClick) {
+        this.recyclerViewOnClick = recyclerViewOnClick;
+    }
 
     public UserBookAdapter(List<UserBook> userBooks) {
         this.userBooks = userBooks;
@@ -37,9 +42,15 @@ public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBo
 
     @Override
     public void onBindViewHolder(@NonNull UserBookHolder holder, int position) {
+        holder.binding.txtName.setText(userBooks.get(position).getName());
         holder.binding.txtLocationStart.setText("Bắt đầu: " + userBooks.get(position).getLocationStart());
         holder.binding.txtLocationEnd.setText("Điểm đến: " + userBooks.get(position).getLocationEnd());
         holder.binding.txtLocationPhone.setText("SĐT: " + userBooks.get(position).getPhoneNumber());
+        holder.binding.txtPrice.setText("Tổng tiền:" + userBooks.get(position).getTotalMoney());
+
+        holder.binding.btnConfirm.setOnClickListener(view -> {
+            recyclerViewOnClick.confirmOnClick(position);
+        });
     }
 
     @Override
@@ -53,5 +64,9 @@ public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBo
             super(itemView.getRoot());
             binding = itemView;
         }
+    }
+
+    public interface IRecyclerViewOnClick {
+        void confirmOnClick(Integer position);
     }
 }

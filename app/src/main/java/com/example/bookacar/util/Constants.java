@@ -18,6 +18,10 @@ public class Constants {
     public final static String KEY_DATE = "dates";
     public final static String INTENT_DRIVER = "DRIVER";
     public final static String INTENT_USER = "USER";
+    public final static String INTENT_CAR = "car";
+    public final static String INTENT_MOTO = "moto";
+    public final static String KEY_TOTAL_MONEY = "totalMoney";
+    public final static String KEY_TYPE_BOOK = "typeBook";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";
