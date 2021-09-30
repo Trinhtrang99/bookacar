@@ -37,8 +37,8 @@
         <activity
             android:name=".admin.AdminActivity"
             android:exported="true" />
-        <activity android:name=".driver.MainDriver" />
-        <activity android:name=".Account.Login">
+<!--        <activity android:name=".driver.MainDriver" />-->
+        <activity android:name=".driver.MainDriver">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
