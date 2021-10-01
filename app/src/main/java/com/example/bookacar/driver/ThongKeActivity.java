@@ -15,6 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRecyclerViewOnClick {
@@ -30,7 +32,6 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
         userBooks = new ArrayList<>();
 
         getUserBook();
-
     }
 
     private void getUserBook () {
@@ -64,5 +65,28 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
     @Override
     public void confirmOnClick(Integer position) {
         Toast.makeText(ThongKeActivity.this, position + "===", Toast.LENGTH_SHORT).show();
+        addBook(position);
+    }
+
+    private void addBook (Integer position) {
+        UserBook userBook = userBooks.get(position);
+        showProgressDialog(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String, Object> confirmBooks = new HashMap<>();
+        confirmBooks.put(Constants.KEY_NAME, userBook.getName());
+        confirmBooks.put(Constants.KEY_LOCATION_START, userBook.getLocationStart());
+        confirmBooks.put(Constants.KEY_LOCATION_END, userBook.getLocationEnd());
+        confirmBooks.put(Constants.KEY_PHONE_NUMBER, userBook.getPhoneNumber());
+        confirmBooks.put(Constants.KEY_TOTAL_MONEY, userBook.getTotalMoney());
+        db.collection(Constants.KEY_COLLECTION_CONFIRM_BOOK)
+                .add(confirmBooks)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    showProgressDialog(false);
+
+                    db.collection(Constants.KEY_COLLECTION_BOOK)
+                            .document(userBook.getId()).delete();
+                    //finish();
+                });
     }
 }

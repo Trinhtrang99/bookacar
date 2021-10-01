@@ -22,6 +22,7 @@ public class Constants {
     public final static String INTENT_MOTO = "moto";
     public final static String KEY_TOTAL_MONEY = "totalMoney";
     public final static String KEY_TYPE_BOOK = "typeBook";
+    public final static String KEY_COLLECTION_CONFIRM_BOOK = "confirmBooks";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";
