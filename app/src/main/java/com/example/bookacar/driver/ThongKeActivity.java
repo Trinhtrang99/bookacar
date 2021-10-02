@@ -11,6 +11,7 @@ import com.example.bookacar.R;
 import com.example.bookacar.databinding.ActivityThongKeBinding;
 import com.example.bookacar.driver.model.UserBook;
 import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -24,12 +25,14 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
     private ActivityThongKeBinding binding;
     private List<UserBook> userBooks;
     private UserBookAdapter adapter;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_thong_ke);
         userBooks = new ArrayList<>();
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         getUserBook();
     }
@@ -79,7 +82,8 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
         confirmBooks.put(Constants.KEY_PHONE_NUMBER, userBook.getPhoneNumber());
         confirmBooks.put(Constants.KEY_TOTAL_MONEY, userBook.getTotalMoney());
         db.collection(Constants.KEY_COLLECTION_CONFIRM_BOOK)
-                .add(confirmBooks)
+                .document(preferenceManager.getString(Constants.KEY_ID_USER))
+                .set(confirmBooks)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                     showProgressDialog(false);

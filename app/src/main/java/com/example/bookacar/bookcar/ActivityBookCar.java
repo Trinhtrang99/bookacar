@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,12 +28,17 @@ import com.example.bookacar.BaseActivity;
 import com.example.bookacar.ICallBackBookCar;
 import com.example.bookacar.R;
 import com.example.bookacar.driver.BookCarActivity;
+import com.example.bookacar.firebase.network.NotificationApi;
+import com.example.bookacar.firebase.network.RetrofitInstance;
+import com.example.bookacar.firebase.network.response.NotificationData;
+import com.example.bookacar.firebase.network.response.PushNotification;
 import com.example.bookacar.map.GPSLocation;
 import com.example.bookacar.test.ChangePositionMap;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.here.android.mpa.common.GeoCoordinate;
 
 import org.json.JSONArray;
@@ -41,6 +47,10 @@ import org.json.JSONObject;
 
 import java.util.Date;
 import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     private final static int REQUEST_CODE_ASK_PERMISSIONS = 1;
@@ -125,6 +135,13 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
 
         m_calculateRouteButton.setText("Xem thông tin");
         m_calculateRouteButton.setOnClickListener(v -> {
+            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+            PushNotification pushNotification = new PushNotification(
+                    new NotificationData("abccc", "messs"),
+                    TOPIC
+            );
+
+            sendNotification(pushNotification);
             if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
                 m_calculateRouteButton.setEnabled(true);
                 GeoCoordinate geoCoordinateStart = new GeoCoordinate(lat, log);
@@ -152,9 +169,11 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
         }
     }
 
+    private String TOPIC = "/topics/myTopic";
     private void addBook () {
         showProgressDialog(true);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        /*FirebaseFirestore db = FirebaseFirestore.getInstance();
         HashMap<String, Object> books = new HashMap<>();
         books.put(Constants.KEY_LOCATION_START, txt_DiemDon.getText().toString());
         books.put(Constants.KEY_LOCATION_END, edtDen.getText().toString());
@@ -168,7 +187,26 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                     showProgressDialog(false);
+
                     //finish();
+                });*/
+    }
+
+    protected void sendNotification (PushNotification pushNotification) {
+        RetrofitInstance.getRetrofit().create(NotificationApi.class)
+                .postNotification(pushNotification)
+                .enqueue(new Callback<PushNotification>() {
+                    @Override
+                    public void onResponse(Call<PushNotification> call, Response<PushNotification> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(ActivityBookCar.this, "OK", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PushNotification> call, Throwable t) {
+                        Log.d("KMFG", t.getMessage());
+                    }
                 });
     }
 

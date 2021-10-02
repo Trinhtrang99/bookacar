@@ -99,17 +99,15 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
             }
         });
         btnBook.setText("Bắt đầu đi");
-        btnBook.setOnClickListener(view -> {
-            Intent i = new Intent(this, ChangePositionMap.class);
-            startActivityForResult(i, 100);
-        });
-        getUserBook();
+
         if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
             setupMapFragmentView();
         } else {
             ActivityCompat
                     .requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
         }
+
+        getUserBook();
     }
 
     private void getUserBook () {
