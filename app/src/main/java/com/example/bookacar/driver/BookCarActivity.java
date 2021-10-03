@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +68,14 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_car2);
+
+        if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
+            setupMapFragmentView();
+        } else {
+            ActivityCompat
+                    .requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
+        }
+
         initView();
         tvDon.setVisibility(View.INVISIBLE);
         tvDen.setVisibility(View.INVISIBLE);
@@ -100,18 +109,17 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
         });
         btnBook.setText("Bắt đầu đi");
 
-        if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
-            setupMapFragmentView();
-        } else {
-            ActivityCompat
-                    .requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE_ASK_PERMISSIONS);
-        }
-
-        getUserBook();
+        showProgressDialog(true);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getUserBook();
+            }
+        }, 2000);
     }
 
     private void getUserBook () {
-        showProgressDialog(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Constants.KEY_COLLECTION_CONFIRM_BOOK)
                 .get()
@@ -185,7 +193,6 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
     private GeoCoordinate geoCoordinateStart;
     private GeoCoordinate geoCoordinateEnd;
     private void doSearch(String query) {
-        //setSearchMode(true);
         TextAutoSuggestionRequest textAutoSuggestionRequest = new TextAutoSuggestionRequest(query);
         textAutoSuggestionRequest.setSearchCenter(m_mapFragmentView.m_map.getCenter());
 
