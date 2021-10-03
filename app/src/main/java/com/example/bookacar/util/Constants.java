@@ -1,5 +1,7 @@
 package com.example.bookacar.util;
 
+import retrofit2.http.PUT;
+
 public class Constants {
 
     public final static String KEY_PHONE_NUMBER = "phoneNumber";
@@ -16,6 +18,7 @@ public class Constants {
     public final static String KEY_LOCATION_END = "locationEnd";
     public final static String KEY_CONFIRM_USER_DRIVER = "confirmUserDriver";
     public final static String KEY_DATE = "dates";
+    public final static String KEY_TIME = "times";
     public final static String INTENT_DRIVER = "DRIVER";
     public final static String INTENT_USER = "USER";
     public final static String INTENT_CAR = "car";
@@ -23,6 +26,8 @@ public class Constants {
     public final static String KEY_TOTAL_MONEY = "totalMoney";
     public final static String KEY_TYPE_BOOK = "typeBook";
     public final static String KEY_COLLECTION_CONFIRM_BOOK = "confirmBooks";
+    public final static String KEY_FCM_TOKEN = "token";
+    public final static String KEY_COLLECTION_NOTIFICATION = "notifications";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";

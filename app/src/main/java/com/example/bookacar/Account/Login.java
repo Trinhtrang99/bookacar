@@ -16,6 +16,9 @@ import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -29,21 +32,11 @@ public class Login extends AppCompatActivity {
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         if (preferenceManager.getBoolean(Constants.KEY_IS_REMEMBER_PASSWORD)) {
-            if (preferenceManager.getString(Constants.KEY_TYPE_USER) != null) {
-                if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
-                    Intent intent = new Intent(getApplicationContext(), HomAd.class);
-                    startActivity(intent);
-                    finish();
-                } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
-                    Intent intent = new Intent(getApplicationContext(), MainDriver.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
+            binding.edtPhone.setText(preferenceManager.getString(Constants.KEY_PHONE_NUMBER));
+            binding.edtPassword.setText(preferenceManager.getString(Constants.KEY_PASSWORD));
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+                updateToken(task.getResult());
+            });
         }
 
         binding.forgotBtn.setOnClickListener(v -> {
@@ -63,6 +56,34 @@ public class Login extends AppCompatActivity {
         });
     }
 
+    private void updateToken(String fcmToken) {
+        binding.progress.setVisibility(View.VISIBLE);
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> users = new HashMap<>();
+        users.put(Constants.KEY_FCM_TOKEN, fcmToken);
+
+        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(preferenceManager.getString(Constants.KEY_ID_USER))
+                .update(users)
+                .addOnCompleteListener(task -> {
+                    binding.progress.setVisibility(View.GONE);
+
+                    if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+                        Intent intent = new Intent(getApplicationContext(), HomAd.class);
+                        startActivity(intent);
+                        finish();
+                    } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
+                        Intent intent = new Intent(getApplicationContext(), MainDriver.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+    }
+
     private void signIn() {
         binding.progress.setVisibility(View.VISIBLE);
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -80,6 +101,7 @@ public class Login extends AppCompatActivity {
                         preferenceManager.putString(Constants.KEY_TYPE_USER, documentSnapshot.getString(Constants.KEY_TYPE_USER));
                         preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
                         preferenceManager.putString(Constants.KEY_ID_USER, documentSnapshot.getId());
+                        preferenceManager.putString(Constants.KEY_FCM_TOKEN, documentSnapshot.getString(Constants.KEY_FCM_TOKEN));
 
                         if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
                             Intent intent = new Intent(getApplicationContext(), HomAd.class);

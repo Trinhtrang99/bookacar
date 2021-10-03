@@ -15,7 +15,11 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.bookacar.MainActivity;
 import com.example.bookacar.R;
+import com.example.bookacar.admin.HomAd;
 import com.example.bookacar.bookcar.ActivityBookCar;
+import com.example.bookacar.driver.MainDriver;
+import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -24,12 +28,23 @@ import java.util.Random;
 public class FirebaseService extends FirebaseMessagingService {
 
     private String CHANNEL_ID = "my_chanel";
+    private PreferenceManager preferenceManager;
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        Intent intent = new Intent(this, ActivityBookCar.class);
+        preferenceManager = new PreferenceManager(getApplicationContext());
+
+        Intent intent;
+        if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
+            intent = new Intent(this, MainDriver.class);
+        } else if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+            intent = new Intent(this, HomAd.class);
+        } else {
+            intent = new Intent(this, ActivityBookCar.class);
+        }
+
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         int notificationId = new Random().nextInt();
 

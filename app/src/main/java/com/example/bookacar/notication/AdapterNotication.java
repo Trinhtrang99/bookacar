@@ -29,8 +29,8 @@ public class AdapterNotication extends RecyclerView.Adapter<AdapterNotication.Vi
 
     @Override
     public void onBindViewHolder(@NonNull AdapterNotication.ViewHolder holder, int position) {
-        holder.tvdetail.setText(list.get(position).detail);
-        holder.tvtime.setText(list.get(position).time);
+        holder.tvdetail.setText( "Ngày " + list.get(position).getDetail());
+        holder.tvtime.setText( "Tài xế đã nhận cuốc " + list.get(position).getTime());
     }
 
     @Override

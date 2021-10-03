@@ -135,13 +135,6 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
 
         m_calculateRouteButton.setText("Xem thông tin");
         m_calculateRouteButton.setOnClickListener(v -> {
-            FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
-            PushNotification pushNotification = new PushNotification(
-                    new NotificationData("abccc", "messs"),
-                    TOPIC
-            );
-
-            sendNotification(pushNotification);
             if (lat != null && log != null && txtDonlat != null && txtDonLong != null) {
                 m_calculateRouteButton.setEnabled(true);
                 GeoCoordinate geoCoordinateStart = new GeoCoordinate(lat, log);
@@ -173,7 +166,7 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     private void addBook () {
         showProgressDialog(true);
 
-        /*FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         HashMap<String, Object> books = new HashMap<>();
         books.put(Constants.KEY_LOCATION_START, txt_DiemDon.getText().toString());
         books.put(Constants.KEY_LOCATION_END, edtDen.getText().toString());
@@ -183,16 +176,26 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
         books.put(Constants.KEY_TYPE_BOOK, typeBook);
         books.put(Constants.KEY_DATE, new Date());
         db.collection(Constants.KEY_COLLECTION_BOOK)
-                .add(books)
+                .document(preferenceManager.getString(Constants.KEY_ID_USER))
+                .set(books)
                 .addOnSuccessListener(documentReference -> {
                     Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                     showProgressDialog(false);
 
+                    FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+                    String message = preferenceManager.getString(Constants.KEY_NAME) + " Đã đặt xe";
+                    PushNotification pushNotification = new PushNotification(
+                            new NotificationData(typeBook, message),
+                            TOPIC
+                    );
+
+                    sendNotification(pushNotification);
+
                     //finish();
-                });*/
+                });
     }
 
-    protected void sendNotification (PushNotification pushNotification) {
+    private void sendNotification (PushNotification pushNotification) {
         RetrofitInstance.getRetrofit().create(NotificationApi.class)
                 .postNotification(pushNotification)
                 .enqueue(new Callback<PushNotification>() {

@@ -40,6 +40,11 @@ public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBo
         return new UserBookHolder(binding);
     }
 
+    public void update (List<UserBook> userBooks) {
+        this.userBooks = userBooks;
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull UserBookHolder holder, int position) {
         holder.binding.txtName.setText(userBooks.get(position).getName());
@@ -67,6 +72,6 @@ public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBo
     }
 
     public interface IRecyclerViewOnClick {
-        void confirmOnClick(Integer position);
+        void confirmOnClick(int position);
     }
 }

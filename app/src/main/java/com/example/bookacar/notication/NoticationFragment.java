@@ -12,21 +12,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bookacar.BaseFragment;
 import com.example.bookacar.R;
 import com.example.bookacar.databinding.FragmentNoticationBinding;
+import com.example.bookacar.driver.UserBookAdapter;
+import com.example.bookacar.driver.model.UserBook;
 import com.example.bookacar.map.AdapterListName;
+import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class NoticationFragment extends Fragment {
+public class NoticationFragment extends BaseFragment {
 
     public NoticationFragment() {
 
     }
 
-    FragmentNoticationBinding binding;
+    private FragmentNoticationBinding binding;
+    private PreferenceManager preferenceManager;
+    private List<Notication> notications;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,32 +55,36 @@ public class NoticationFragment extends Fragment {
     public void onViewCreated(@NonNull  View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        AdapterNotication adapterListName = new AdapterNotication(getList());
-        RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
-        binding.rcNotication.setLayoutManager(layoutManager1);
-        binding.rcNotication.setAdapter(adapterListName);
+        preferenceManager = new PreferenceManager(getContext());
+        notications = new ArrayList<>();
+
+        getUserNotification();
     }
 
-    private List<Notication> getList() {
-        List<Notication> list = new ArrayList<>();
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        list.add(new Notication("Tài xế đã nhận cuốc vào lúc 10:30", "Ngày 22/9/2021 lúc 10:30"));
-        list.add(new Notication("Hoàn thành chuyến đi tới Kim Giang", "Ngày 22/9/2021 lúc 11:30"));
-        return list;
+    private void getUserNotification() {
+        showProgressDialog(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(preferenceManager.getString(Constants.KEY_ID_USER))
+                .collection(Constants.KEY_COLLECTION_NOTIFICATION)
+                .get()
+                .addOnCompleteListener(task -> {
+                    notications.clear();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                        Notication notication = new Notication(
+                                queryDocumentSnapshot.getString(Constants.KEY_DATE),
+                                queryDocumentSnapshot.getString(Constants.KEY_TIME)
+                        );
+
+                        notications.add(notication);
+                    }
+
+                    AdapterNotication adapterListName = new AdapterNotication(notications);
+                    RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
+                    binding.rcNotication.setLayoutManager(layoutManager1);
+                    binding.rcNotication.setAdapter(adapterListName);
+
+                    showProgressDialog(false);
+                });
     }
 }
