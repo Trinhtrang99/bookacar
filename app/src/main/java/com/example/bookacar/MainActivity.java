@@ -160,42 +160,7 @@ public class MainActivity extends AppCompatActivity implements Onclick {
 
     }
 
-    public void displayAlertDialog() {
-        fragmentView.cleanMap();
-        LayoutInflater inflater = getLayoutInflater();
-        View alertLayout = inflater.inflate(R.layout.actionsheet, null);
-        final EditText edtDon = alertLayout.findViewById(R.id.edtdon);
-        final EditText edtDen = alertLayout.findViewById(R.id.et_Password);
-        this.edtDon = edtDon;
-        this.edtDen = edtDen;
-        final AppCompatButton cb_ShowPassword = (AppCompatButton) alertLayout.findViewById(R.id.cb_ShowPassword);
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setView(alertLayout);
-        alert.setCancelable(false);
-        AlertDialog dialog = alert.create();
-        edtDon.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                fragmentView.onClickDon();
-                don = v.getText().toString();
-                hideKeyboardFrom(this, edtDon);
-                return true;
-            }
-            return false;
-        });
-        edtDen.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                fragmentView.onClickDen();
-                txtDen = v.getText().toString();
-                hideKeyboardFrom(this, edtDen);
-                return true;
-            }
-            return false;
-        });
-        cb_ShowPassword.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-        dialog.show();
-    }
+   
 
     @Override
     public void OnClick() {

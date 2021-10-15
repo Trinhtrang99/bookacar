@@ -6,24 +6,36 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/backgroud"
         tools:context=".home.HomeFragment">
 
 
         <RelativeLayout
             android:id="@+id/view_fliper"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:background="@color/color_main">
+            android:layout_height="250dp">
 
             <TextView
                 android:id="@+id/txt_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text=" Chào Nam!!"
-                android:textColor="@color/white"
-                android:textSize="25sp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/architects_daughter"
+                android:text=" Chào Nam "
+                android:textColor="@color/color_main"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_phone"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/architects_daughter"
+                android:text=" Bạn muôn đi  ! !"
+                android:textColor="@color/color_main"
+                android:textSize="30dp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -32,7 +44,6 @@
             android:layout_height="match_parent"
             android:layout_below="@id/view_fliper"
             android:layout_marginTop="-30dp"
-            android:background="@drawable/border_top"
             android:orientation="vertical"
             android:weightSum="2">
 
@@ -52,14 +63,27 @@
                     android:elevation="10dp"
                     app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Đặt xe ô tô"
-                        android:textColor="@color/black"
-                        android:textSize="19sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đặt xe ô tô"
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_directions_car_24" />
+                    </LinearLayout>
+
+
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -73,14 +97,27 @@
                     android:elevation="10dp"
                     app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Đặt xe xe máy"
-                        android:textColor="@color/black"
-                        android:textSize="19sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Đặt xe máy"
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_electric_moped_24" />
+                    </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
@@ -100,17 +137,31 @@
                     android:elevation="10dp"
                     app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Lịch sử đặt xe"
-                        android:textColor="@color/black"
-                        android:textSize="19sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Lịch sử đặt xe"
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_watch_later_24" />
+                    </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/gift"
                     android:layout_width="0dp"
                     android:layout_height="160dp"
                     android:layout_marginLeft="10dp"
@@ -120,13 +171,26 @@
                     android:elevation="10dp"
                     app:cardCornerRadius="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="19sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="ưu đãi"
+                            android:textColor="@color/black"
+                            android:textSize="19sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_card_giftcard_24" />
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </LinearLayout>

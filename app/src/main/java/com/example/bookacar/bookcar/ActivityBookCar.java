@@ -70,12 +70,14 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     TextView txtChangeDon;
     TextView txtChangeDen;
     TextView edtDen;
+    TextView donGia;
     private Double lat;
     public static Double log;
     public static Double txtDonlat, txtDonLong;
     private Button m_calculateRouteButton;
     private PreferenceManager preferenceManager;
     private String typeBook;
+    private int Cost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +86,12 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
         m_calculateRouteButton = findViewById(R.id.btnBook);
         mBottomSheetLayout = findViewById(R.id.lnbtn);
         txt_DiemDon = findViewById(R.id.txt_diemDon);
+        donGia = findViewById(R.id.donGia);
         edtDen = findViewById(R.id.edtDen);
 
+        // nhân giá tiền ở đây nhé
+        Cost = getIntent().getIntExtra("Cost", 0);
+        donGia.setText(donGia + "vnđ");
         preferenceManager = new PreferenceManager(getApplicationContext());
         typeBook = getIntent().getStringExtra(Constants.KEY_TYPE_BOOK);
 
@@ -163,7 +169,8 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     }
 
     private String TOPIC = "/topics/myTopic";
-    private void addBook () {
+
+    private void addBook() {
         showProgressDialog(true);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -195,7 +202,7 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
                 });
     }
 
-    private void sendNotification (PushNotification pushNotification) {
+    private void sendNotification(PushNotification pushNotification) {
         RetrofitInstance.getRetrofit().create(NotificationApi.class)
                 .postNotification(pushNotification)
                 .enqueue(new Callback<PushNotification>() {

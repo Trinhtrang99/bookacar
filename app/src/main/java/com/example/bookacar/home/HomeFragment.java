@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.example.bookacar.ActivityGift;
 import com.example.bookacar.HistoryActivity;
 import com.example.bookacar.R;
 import com.example.bookacar.bookcar.ActivityBookCar;
@@ -51,17 +52,22 @@ public class HomeFragment extends Fragment {
         binding.cvCar.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), ActivityBookCar.class);
             intent.putExtra(Constants.KEY_TYPE_BOOK, Constants.INTENT_CAR);
+            intent.putExtra("Cost", 20000);
             startActivity(intent);
         });
 
         binding.cvMotorcycle.setOnClickListener(view1 -> {
             Intent intent = new Intent(getActivity(), ActivityBookCar.class);
             intent.putExtra(Constants.KEY_TYPE_BOOK, Constants.INTENT_MOTO);
+            intent.putExtra("Cost", 30000);
             startActivity(intent);
         });
 
         binding.btHistory.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), HistoryActivity.class));
+        });
+        binding.gift.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), ActivityGift.class));
         });
     }
 }

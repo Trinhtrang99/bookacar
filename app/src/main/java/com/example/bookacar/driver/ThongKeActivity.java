@@ -43,7 +43,9 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_thong_ke);
         userBooks = new ArrayList<>();
         preferenceManager = new PreferenceManager(getApplicationContext());
-
+        binding.imgback.setOnClickListener(v -> {
+            finish();
+        });
         getUserBook();
     }
 
@@ -153,7 +155,7 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
         notifications.put(Constants.KEY_DATE, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         notifications.put(Constants.KEY_TIME, new SimpleDateFormat("HH:mm").format(new Date()));
 
-        Toast.makeText(ThongKeActivity.this, userBook.getId()+ "==", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ThongKeActivity.this, userBook.getId() + "==", Toast.LENGTH_SHORT).show();
         db.collection(Constants.KEY_COLLECTION_ACCOUNT)
                 .document(userBook.getId())
                 .collection(Constants.KEY_COLLECTION_NOTIFICATION)

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BookACar">
-        <activity android:name=".driver.ThongKeActivity"></activity>
+        <activity android:name=".admin.ActivityThuNhap"></activity>
+        <activity android:name=".ActivityGift" />
+        <activity android:name=".driver.ThongKeActivity" />
         <activity android:name=".driver.BookCarActivity" />
         <activity android:name=".person.ChangeInfActivity" />
         <activity android:name=".admin.ConfimDriverActivity" />
@@ -34,8 +36,7 @@
         <activity
             android:name=".admin.AdminActivity"
             android:exported="true" />
-        <activity android:name=".driver.MainDriver">
-        </activity>
+        <activity android:name=".driver.MainDriver" />
         <activity android:name=".Account.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,13 +69,12 @@
             android:enabled="true"
             android:exported="false"
             android:process=":remote" />
-
         <service
             android:name=".firebase.FirebaseService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
     </application>

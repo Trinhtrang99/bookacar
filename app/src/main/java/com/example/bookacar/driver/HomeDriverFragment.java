@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.bookacar.R;
+import com.example.bookacar.admin.model.ThuNhap;
 import com.example.bookacar.databinding.FragmentHomeDriverBinding;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
@@ -50,6 +51,10 @@ public class HomeDriverFragment extends Fragment {
 
         binding.cvCar.setOnClickListener(v -> {
             Intent i = new Intent(getContext(), ThongKeActivity.class);
+            startActivity(i);
+        });
+        binding.btHistory.setOnClickListener(v -> {
+            Intent i = new Intent(getContext(), ThuNhap.class);
             startActivity(i);
         });
     }
