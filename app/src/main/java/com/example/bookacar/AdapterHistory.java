@@ -13,7 +13,11 @@ import com.example.bookacar.databinding.ItemhistoryBinding;
 import java.util.List;
 
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHolder> {
-    List<HistoryModel> list;
+    private List<HistoryModel> list;
+
+    public AdapterHistory(List<HistoryModel> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -30,9 +34,10 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AdapterHistory.ViewHolder holder, int position) {
-        holder.binding.tvDate.setText(list.get(position).getDate());
-        holder.binding.descrip.setText(list.get(position).getDescrip());
-        holder.binding.money.setText(list.get(position).getCost());
+        holder.binding.tvDate.setText(list.get(position).date);
+        holder.binding.txtLocationStart.setText(list.get(position).locationStart);
+        holder.binding.txtLocationEnd.setText(list.get(position).locationEnd);
+        holder.binding.txtTotalMoney.setText(list.get(position).cost);
     }
 
     @Override

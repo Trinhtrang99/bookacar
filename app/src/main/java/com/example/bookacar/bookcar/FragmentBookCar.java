@@ -53,6 +53,7 @@ public class FragmentBookCar {
     private Button m_calculateRouteButton;
     TextView txtLength;
     public FTCRMapRoute m_mapRoute;
+    TextView donGia;
 
     private GeoCoordinate[] m_fakeRoute;
     private GeoCoordinate m_startPoint;
@@ -74,9 +75,12 @@ public class FragmentBookCar {
         return totalMoney;
     }
 
-    public FragmentBookCar(AppCompatActivity activity) {
+    private boolean isUser;
+    public FragmentBookCar(AppCompatActivity activity, boolean isUser) {
+        this.isUser = isUser;
         m_activity = activity;
         txtLength = m_activity.findViewById(R.id.txtLength);
+        donGia = m_activity.findViewById(R.id.donGia);
         try {
             ApplicationInfo app = m_activity.getPackageManager()
                     .getApplicationInfo(m_activity.getPackageName(), PackageManager.GET_META_DATA);
@@ -223,7 +227,12 @@ public class FragmentBookCar {
                     lengthPtP = routeResults.get(0).getLength();
                     txtLength.setText(lengthPtP/1000 + " km");
                     totalMoney = (lengthPtP/1000) * 20000;
-                    m_calculateRouteButton.setText("Đặt xe");
+                    if (isUser) {
+                        m_calculateRouteButton.setText("Đặt xe");
+                    } else {
+                        m_calculateRouteButton.setText("Xong");
+                    }
+                    donGia.setText(totalMoney + " VND");
 
                     iCallBackBookCar.hideProgressDialog();
 

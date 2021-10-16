@@ -7,6 +7,7 @@ public class UserBook {
     private String locationEnd;
     private String phoneNumber;
     private String totalMoney;
+    private String typeBook;
 
     public UserBook(String id, String name, String locationStart, String locationEnd, String phoneNumber, String totalMoney) {
         this.id = id;
@@ -63,5 +64,13 @@ public class UserBook {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTypeBook() {
+        return typeBook;
+    }
+
+    public void setTypeBook(String typeBook) {
+        this.typeBook = typeBook;
     }
 }

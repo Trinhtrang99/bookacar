@@ -3,6 +3,7 @@ package com.example.bookacar.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -23,6 +24,7 @@ import java.util.HashMap;
 public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
     private PreferenceManager preferenceManager;
+    private boolean isChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class Login extends AppCompatActivity {
         });
 
         binding.chkRememberMe.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            preferenceManager.putBoolean(Constants.KEY_IS_REMEMBER_PASSWORD, isChecked);
+            this.isChecked = isChecked;
         });
     }
 
@@ -104,14 +106,21 @@ public class Login extends AppCompatActivity {
                         preferenceManager.putString(Constants.KEY_FCM_TOKEN, documentSnapshot.getString(Constants.KEY_FCM_TOKEN));
 
                         if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_ADMIN)) {
+                            preferenceManager.putBoolean(Constants.KEY_IS_REMEMBER_PASSWORD, isChecked);
                             Intent intent = new Intent(getApplicationContext(), HomAd.class);
                             startActivity(intent);
                             finish();
                         } else if (documentSnapshot.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
-                            Intent intent = new Intent(getApplicationContext(), MainDriver.class);
-                            startActivity(intent);
-                            finish();
+                            if (documentSnapshot.getBoolean(Constants.KEY_CONFIRM_USER_DRIVER)) {
+                                preferenceManager.putBoolean(Constants.KEY_IS_REMEMBER_PASSWORD, isChecked);
+                                Intent intent = new Intent(getApplicationContext(), MainDriver.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Tài khoản chưa được xác nhận", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
+                            preferenceManager.putBoolean(Constants.KEY_IS_REMEMBER_PASSWORD, isChecked);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             finish();

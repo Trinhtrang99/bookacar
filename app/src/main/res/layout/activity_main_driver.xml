@@ -37,7 +37,7 @@
                 android:layout_alignParentBottom="true"
                 app:itemTextColor="@color/color_main"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/menu" />
+                app:menu="@menu/menudriver" />
 
         </RelativeLayout>
 

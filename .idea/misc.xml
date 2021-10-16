@@ -12,7 +12,9 @@
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_edit.xml" value="0.3229166666666667" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_fogot_pass.xml" value="0.3567708333333333" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_fogot_v2.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_gift.xml" value="0.1296875" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_history.xml" value="0.28489583333333335" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_hom_ad.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_login.xml" value="0.3567708333333333" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_main.xml" value="0.2972222222222222" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_main3.xml" value="0.35520833333333335" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_registion.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_registion_v2.xml" value="0.28020833333333334" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_thong_ke.xml" value="0.2755208333333333" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/activity_thu_nhap.xml" value="0.259375" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/btssh.xml" value="0.28802083333333334" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/custom_dialog_fragment.xml" value="0.3229166666666667" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/fragment_home.xml" value="0.2838541666666667" />
@@ -29,7 +32,10 @@
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/item_driver_admin.xml" value="0.2838541666666667" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/item_noti.xml" value="0.33240740740740743" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/item_user_book.xml" value="0.2598958333333333" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/itemhistory.xml" value="0.259375" />
         <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/layout/itemplace.xml" value="0.3567708333333333" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/menu/menu.xml" value="0.24375" />
+        <entry key="..\:/Users/tung0/Documents/bookacar/app/src/main/res/menu/menudriver.xml" value="0.24375" />
       </map>
     </option>
   </component>

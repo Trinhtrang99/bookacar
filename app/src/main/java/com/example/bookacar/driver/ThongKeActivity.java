@@ -53,6 +53,7 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
         showProgressDialog(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Constants.KEY_COLLECTION_BOOK)
+                .whereEqualTo(Constants.KEY_IS_BOOK, false)
                 .get()
                 .addOnCompleteListener(task -> {
                     userBooks.clear();
@@ -65,6 +66,7 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
                                 queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER),
                                 queryDocumentSnapshot.getLong(Constants.KEY_TOTAL_MONEY) + " VND"
                         );
+                        userBook.setTypeBook(queryDocumentSnapshot.getString(Constants.KEY_TYPE_BOOK));
 
                         userBooks.add(userBook);
                     }
@@ -106,7 +108,7 @@ public class ThongKeActivity extends BaseActivity implements UserBookAdapter.IRe
                     showProgressDialog(false);
 
                     db.collection(Constants.KEY_COLLECTION_BOOK)
-                            .document(userBook.getId()).delete();
+                            .document(userBook.getId()).update(Constants.KEY_IS_BOOK, true);
                 });
     }
 

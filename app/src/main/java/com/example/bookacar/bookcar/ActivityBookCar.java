@@ -45,6 +45,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -91,7 +92,7 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
 
         // nhân giá tiền ở đây nhé
         Cost = getIntent().getIntExtra("Cost", 0);
-        donGia.setText(donGia + "vnđ");
+        donGia.setText(20000 + "/km");
         preferenceManager = new PreferenceManager(getApplicationContext());
         typeBook = getIntent().getStringExtra(Constants.KEY_TYPE_BOOK);
 
@@ -181,7 +182,8 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
         books.put(Constants.KEY_TOTAL_MONEY, m_mapFragmentView.getTotalMoney());
         books.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
         books.put(Constants.KEY_TYPE_BOOK, typeBook);
-        books.put(Constants.KEY_DATE, new Date());
+        books.put(Constants.KEY_IS_BOOK, false);
+        books.put(Constants.KEY_DATE, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         db.collection(Constants.KEY_COLLECTION_BOOK)
                 .document(preferenceManager.getString(Constants.KEY_ID_USER))
                 .set(books)
@@ -221,7 +223,7 @@ public class ActivityBookCar extends BaseActivity implements ICallBackBookCar {
     }
 
     private void setupMapFragmentView() {
-        m_mapFragmentView = new FragmentBookCar(this);
+        m_mapFragmentView = new FragmentBookCar(this, true);
     }
 
     private static boolean hasPermissions(Context context, String... permissions) {

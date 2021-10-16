@@ -30,6 +30,7 @@ import com.example.bookacar.databinding.ActivityBookCar2Binding;
 import com.example.bookacar.driver.model.UserBook;
 import com.example.bookacar.test.ChangePositionMap;
 import com.example.bookacar.util.Constants;
+import com.example.bookacar.util.PreferenceManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +43,9 @@ import com.here.android.mpa.search.ErrorCode;
 import com.here.android.mpa.search.ResultListener;
 import com.here.android.mpa.search.TextAutoSuggestionRequest;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,11 +67,14 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
     private ImageView header_Arrow_Image;
     private TextView txt_DiemDon, txt_DiemDen;
     private ActivityBookCar2Binding binding;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book_car2);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
 
         if (hasPermissions(this, RUNTIME_PERMISSIONS)) {
             setupMapFragmentView();
@@ -109,6 +116,10 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
         });
         btnBook.setText("Bắt đầu đi");
 
+        btnBook.setOnClickListener(view -> {
+            addHistory();
+        });
+
         showProgressDialog(true);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -119,17 +130,57 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
         }, 2000);
     }
 
+    private UserBook userBook;
+    private void addHistory () {
+        showProgressDialog(true);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        HashMap<String, Object> histories = new HashMap<>();
+        histories.put(Constants.KEY_NAME, userBook.getName());
+        histories.put(Constants.KEY_LOCATION_START, userBook.getLocationStart());
+        histories.put(Constants.KEY_LOCATION_END, userBook.getLocationEnd());
+        histories.put(Constants.KEY_TOTAL_MONEY, userBook.getTotalMoney());
+        histories.put(Constants.KEY_PHONE_NUMBER, userBook.getPhoneNumber());
+        histories.put(Constants.KEY_DATE, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        db.collection(Constants.KEY_COLLECTION_HISTORY)
+                .add(histories)
+                .addOnSuccessListener(documentReference -> {
+
+                    Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    showProgressDialog(false);
+                    finish();
+
+                    db.collection(Constants.KEY_COLLECTION_CONFIRM_BOOK)
+                            .document(userBook.getId()).delete();
+                });
+    }
+
     private void getUserBook () {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Constants.KEY_COLLECTION_CONFIRM_BOOK)
                 .get()
                 .addOnCompleteListener(task -> {
-                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                    txt_DiemDon.setText(documentSnapshot.getString(Constants.KEY_LOCATION_START));
-                    txt_DiemDen.setText(documentSnapshot.getString(Constants.KEY_LOCATION_END));
 
-                    doSearch(documentSnapshot.getString(Constants.KEY_LOCATION_START));
-                    doSearch(documentSnapshot.getString(Constants.KEY_LOCATION_END));
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                        if (queryDocumentSnapshot.getId().equals(preferenceManager.getString(Constants.KEY_ID_USER))) {
+                            txt_DiemDon.setText(queryDocumentSnapshot.getString(Constants.KEY_LOCATION_START));
+                            txt_DiemDen.setText(queryDocumentSnapshot.getString(Constants.KEY_LOCATION_END));
+
+                            userBook = new UserBook(
+                                    queryDocumentSnapshot.getId(),
+                                    queryDocumentSnapshot.getString(Constants.KEY_NAME),
+                                    queryDocumentSnapshot.getString(Constants.KEY_LOCATION_START),
+                                    queryDocumentSnapshot.getString(Constants.KEY_LOCATION_END),
+                                    queryDocumentSnapshot.getString(Constants.KEY_PHONE_NUMBER),
+                                    queryDocumentSnapshot.getString(Constants.KEY_TOTAL_MONEY)
+                            );
+
+                            doSearch(queryDocumentSnapshot.getString(Constants.KEY_LOCATION_START));
+                            doSearch(queryDocumentSnapshot.getString(Constants.KEY_LOCATION_END));
+
+                            break;
+                        }
+
+                    }
 
                     showProgressDialog(false);
                 });
@@ -145,7 +196,7 @@ public class BookCarActivity extends BaseActivity implements ICallBackBookCar {
     }
 
     private void setupMapFragmentView() {
-        m_mapFragmentView = new FragmentBookCar(this);
+        m_mapFragmentView = new FragmentBookCar(this, false);
     }
 
     private static boolean hasPermissions(Context context, String... permissions) {

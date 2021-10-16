@@ -12,7 +12,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.bookacar.Account.Login;
+import com.example.bookacar.HistoryActivity;
 import com.example.bookacar.R;
+import com.example.bookacar.admin.ActivityThuNhap;
 import com.example.bookacar.databinding.FragmentPersonBinding;
 import com.example.bookacar.util.Constants;
 import com.example.bookacar.util.PreferenceManager;
@@ -63,6 +65,13 @@ public class PersonFragment extends Fragment {
             i.putExtra("loaiTK","");
             startActivity(i);
 
+        });
+        binding.txtLs.setOnClickListener(view1 -> {
+            if (preferenceManager.getString(Constants.KEY_TYPE_USER).equals(Constants.TYPE_DRIVER)) {
+                startActivity(new Intent(getContext(), ActivityThuNhap.class));
+            } else {
+                startActivity(new Intent(getContext(), HistoryActivity.class));
+            }
         });
     }
 }

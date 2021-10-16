@@ -52,6 +52,7 @@ public class UserBookAdapter extends RecyclerView.Adapter<UserBookAdapter.UserBo
         holder.binding.txtLocationEnd.setText("Điểm đến: " + userBooks.get(position).getLocationEnd());
         holder.binding.txtLocationPhone.setText("SĐT: " + userBooks.get(position).getPhoneNumber());
         holder.binding.txtPrice.setText("Tổng tiền:" + userBooks.get(position).getTotalMoney());
+        holder.binding.txtTypeBook.setText("Xe:" + userBooks.get(position).getTypeBook());
 
         holder.binding.btnConfirm.setOnClickListener(view -> {
             recyclerViewOnClick.confirmOnClick(position);

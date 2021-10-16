@@ -28,6 +28,8 @@ public class Constants {
     public final static String KEY_COLLECTION_CONFIRM_BOOK = "confirmBooks";
     public final static String KEY_FCM_TOKEN = "token";
     public final static String KEY_COLLECTION_NOTIFICATION = "notifications";
+    public final static String KEY_COLLECTION_HISTORY = "histories";
+    public final static String KEY_IS_BOOK = "isBook";
 
     public final static String KEY_PREFERENCE_NAME = "preference";
     public final static String KEY_IS_REMEMBER_PASSWORD = "remember_password";

@@ -55,12 +55,12 @@ public class ConfimDriverActivity extends BaseActivity implements AdaperConfirm.
                             confirmList.add(confirm);
                         }
 
-                        showProgressDialog(false);
-
                         adapter = new AdaperConfirm(confirmList);
                         adapter.setRecyclerView(this);
                         binding.rvConfirm.setAdapter(adapter);
                     }
+
+                    showProgressDialog(false);
                 });
     }
 

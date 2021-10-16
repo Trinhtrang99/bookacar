@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -78,6 +79,8 @@ public class NoticationFragment extends BaseFragment {
 
                         notications.add(notication);
                     }
+
+                    Collections.sort(notications, (obj1, obj2) -> obj2.getDetail().compareTo(obj1.getDetail()));
 
                     AdapterNotication adapterListName = new AdapterNotication(notications);
                     RecyclerView.LayoutManager layoutManager1 = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);

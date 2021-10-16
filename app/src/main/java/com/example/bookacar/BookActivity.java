@@ -25,11 +25,11 @@ public class BookActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_book);
         preferenceManager = new PreferenceManager(getApplicationContext());
 
-        binding.btnBook.setOnClickListener(view -> {
+        /*binding.btnBook.setOnClickListener(view -> {
             addBook();
-        });
+        });*/
     }
-
+/*
     private void addBook () {
         showProgressDialog(true);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -44,5 +44,5 @@ public class BookActivity extends BaseActivity {
                     showProgressDialog(false);
                     finish();
                 });
-    }
+    }*/
 }
